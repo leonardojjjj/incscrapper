@@ -1,10 +1,10 @@
 import puppeteer from "puppeteer-extra"
 import StealthPlugin from "puppeteer-extra-plugin-stealth"
 
-import IGetDataDTO from "../dtos/ISearchDTO"
+import ISearchDTO from "../dtos/ISearchDTO"
 import IInfoDataDTO from "../dtos/IInfoDataDTO"
 
-export default async function ({ search, city, uf }:IGetDataDTO) {
+export default async function ({ search, city, uf }:ISearchDTO) {
   city = city ? city : "JOAO PESSOA"
   uf = uf ? uf : "PB"
   
@@ -51,7 +51,7 @@ export default async function ({ search, city, uf }:IGetDataDTO) {
 
           //GET INFO DATA AND PARSE
           var personRaw:any = await page.$$('div.is-narrow')
-          var DATA: IInfoDataDTO
+          var DATA:any = { quadroSocietario: [] }
           var affiliedsRaw:any = ""
           for (let i = 0; i < personRaw.length; i++) {
               var info = await page.evaluate(el => el.innerHTML, personRaw[i])
@@ -65,24 +65,24 @@ export default async function ({ search, city, uf }:IGetDataDTO) {
               }
               //BAIANAGEM MAS DEU CERTO, SLA, DPS TEM QUE REFATORAR ISSO.
               if (value.includes("<")) value = "N/A"
-              if (i == 0) DATA.cnpj = value
-              if (i == 1) DATA.razaoSocial = value
-              if (i == 2) DATA.nomeFantasia = value
-              if (i == 3) DATA.tipo = value
-              if (i == 4) DATA.dataAbertura = value
-              if (i == 5) DATA.sitCadastral = value
-              if (i == 6) DATA.sitCadastralData = value
-              if (i == 7) DATA.capitalSocial = value
-              if (i == 8) DATA.naturezaJuridica = value
-              if (i == 9) DATA.empresaMei = value
-              if (i == 10) DATA.logradouro = value
-              if (i == 11) DATA.number = value
-              if (i == 12) DATA.complemento = value
-              if (i == 13) DATA.cep = value
-              if (i == 14) DATA.bairro = value
-              if (i == 17) DATA.telefone = value
-              if (i == 18) DATA.email = value
-              if (i == 20) DATA.atividadePrincipal = value
+              if (i == 0) DATA['cnpj'] = value
+              if (i == 1) DATA['razaoSocial'] = value
+              if (i == 2) DATA['nomeFantasia'] = value
+              if (i == 3) DATA['tipo'] = value
+              if (i == 4) DATA['dataAbertura'] = value
+              if (i == 5) DATA['sitCadastral'] = value
+              if (i == 6) DATA['sitCadastralData'] = value
+              if (i == 7) DATA['capitalSocial'] = value
+              if (i == 8) DATA['naturezaJuridica'] = value
+              if (i == 9) DATA['empresaMei'] = value
+              if (i == 10) DATA['logradouro'] = value
+              if (i == 11) DATA['number'] = value
+              if (i == 12) DATA['complemento'] = value
+              if (i == 13) DATA['cep'] = value
+              if (i == 14) DATA['bairro'] = value
+              if (i == 17) DATA['telefone'] = value
+              if (i == 18) DATA['email'] = value
+              if (i == 20) DATA['atividadePrincipal'] = value
           }
           
           //GET MANAGERS
