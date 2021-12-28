@@ -1,9 +1,10 @@
-import { xlsxJson } from "./xlsx"
+import { xlsxJson, jsonXlxs } from "./xlsx"
 import saveFile from "./saveBodyFile"
 import getCompany from "./getCompany"
 
 export { 
-  xlsxJson, 
+  xlsxJson,
+  jsonXlxs, 
   saveFile, 
   getCompany 
 }
