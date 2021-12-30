@@ -1,5 +1,5 @@
 import { Request, Response } from "express"
-import { xlsxJson, jsonXlxs, saveFile, getCompany } from "../../utils/index"
+import { xlsxJson, jsonXlxs, saveFile, getCompany } from "./index"
 import { path } from "app-root-path"
 import fs from "fs"
 
@@ -11,15 +11,16 @@ export const config = {
 
 export default async function handler(req:Request, res:Response): Promise<any> {
     const findedData = []
+    const notFinded = []
     
     const filePath:any = await saveFile(req)
     const jsonXslx = await xlsxJson(filePath)
         
-    var columnIndex = 0
-    var consultStatus = { loaded: 0, finded: 0 }
+    let columnIndex = 0
+    let consultStatus = { loaded: 0, finded: 0 }
     
     for (let i = 0; i < jsonXslx.length; i++) {
-        var forFind = jsonXslx[i][Object.keys(jsonXslx[i])[columnIndex]]
+        let forFind = jsonXslx[i][Object.keys(jsonXslx[i])[columnIndex]]
         console.log(consultStatus, forFind)
         if (/\d/.test(forFind)) {
             columnIndex++
@@ -30,9 +31,12 @@ export default async function handler(req:Request, res:Response): Promise<any> {
             if (tryFind) {
                 consultStatus.finded++
                 findedData.push(...tryFind)
+            } else {
+                notFinded.push({ name: forFind })
             }
         }
     }
+    findedData.push(...notFinded)
 
     await jsonXlxs(findedData)  
     let filepath = path + "/Resultados.xlsx"

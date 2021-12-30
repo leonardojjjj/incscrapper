@@ -1,20 +1,14 @@
 import puppeteer from "puppeteer-extra"
 import StealthPlugin from "puppeteer-extra-plugin-stealth"
 import AdBlockerPlugin from "puppeteer-extra-plugin-adblocker"
-import ISearchDTO from "../dtos/ISearchDTO"
 
-export default async function ({ search, city, uf }:ISearchDTO) {
+import ISearchDTO from "../dtos/ISearchDTO"
+import IInfoDataDTO from "../dtos/IInfoDataDTO"
+
+export default async function ({ search, city, uf }:ISearchDTO): Promise<IInfoDataDTO[]> {
 	search = search.trim().toUpperCase()
 	city = city ? city : "JOAO PESSOA"
 	uf = uf ? uf : "PB"
-
-	let data = { 
-		name: "",
-		empresa: "",
-		cnpj: "",
-		email: "",
-		sitCadastral: ""
-	}
 
 	let totalData = []
 	let query = 'q=' + search.replace(/" "/gi, "%20") + "&uf=" + uf.toUpperCase() + "&municipio=" + city.toUpperCase().replace(/" "/gi, "%20")
@@ -79,5 +73,6 @@ export default async function ({ search, city, uf }:ISearchDTO) {
 	}
 
 	if (totalData.length == 0) return null
+	
 	return totalData
 }

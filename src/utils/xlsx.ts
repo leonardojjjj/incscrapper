@@ -9,7 +9,7 @@ export async function xlsxJson(path:string) {
   return json
 }
 
-export async function jsonXlxs(json:object[]) {
+export async function jsonXlxs(id, json:object[]) {
   let data = [
     {
       sheet: 'Companys',
@@ -26,7 +26,7 @@ export async function jsonXlxs(json:object[]) {
   ]
 
   let settings = {
-    fileName: 'Resultados',
+    fileName: id,
     extraLength: 5,
     writeOptions: {}
   }
