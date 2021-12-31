@@ -10,7 +10,7 @@ export default async function({ id, json }: IQueueDTO): Promise<void> {
   const notFinded = []
       
   let queueData = JSON.parse(fs.readFileSync(path + "/src/queue.json", { encoding: "utf-8" }))
-  queueData.push({ id, loaded: 0, finded: 0, checked: 0, last: "" })
+  queueData.push({ id, loaded: json.length, finded: 0, checked: 0, last: "" })
   fs.writeFileSync(path + "/src/queue.json", JSON.stringify(queueData, null, 4), { encoding: "utf-8" })
   
   let columnIndex = 0
@@ -26,7 +26,6 @@ export default async function({ id, json }: IQueueDTO): Promise<void> {
       columnIndex++
       i = 0
     } else {
-      queueStats.loaded++
       const tryFind = await getCompany({ search: forFind })
       if (tryFind) {
           queueStats.finded++
