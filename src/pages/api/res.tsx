@@ -6,7 +6,7 @@ import { path } from "app-root-path"
 
 export default async function handler(req:Request, res:Response): Promise<any> {
   const ID = req.query.id
-  const queueData = await queueStats({ id: ID })
+  const queueData:any = await queueStats({ id: ID })
 
   if (!queueData) {
     res.status(403).send({ status: "failure", message: "ID doesn't exists on queue." })

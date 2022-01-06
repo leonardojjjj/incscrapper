@@ -16,10 +16,13 @@ export async function jsonXlxs(id, json:object[]) {
       columns: [
         { label: "NOME", value: 'name' },
         { label: "TELEFONE", value: 'telefone' },
-        { label: "EMPRESA", value: 'empresa' },
+        { label: "TELEFONE RECENTE", value: 'telefoneRec' },
+        { label: "RAZÃO SOCIAL", value: 'rzSocial' },
+        { label: "NOME FANTASIA", value: 'nmFantasia' },
         { label: "CNPJ", value: 'cnpj' },
         { label: "EMAIL", value: 'email' },
-        { label: "SITUAÇÃO CADASTRAL", value: 'sitCadastral' },    
+        { label: "SITUAÇÃO CADASTRAL", value: 'sitCadastral' },
+        { label: "ENDEREÇO", value: "address" }    
       ],
       content: json
     }
